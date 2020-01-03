@@ -1,0 +1,21 @@
+version: '2'
+services:
+  es:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.0
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - discovery.type=single-node
+      - http.cors.enabled=true
+      - http.cors.allow-origin=http://localhost:1358,http://127.0.0.1:1358,http://localhost:9000
+      - http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization
+      - http.cors.allow-credentials=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    # volumes:
+    #   - data01:/usr/share/elasticsearch/data
+
+  dejavu:
+    image: appbaseio/dejavu:latest
+    ports:
+      - "1358:1358"
